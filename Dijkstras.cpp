@@ -1,39 +1,26 @@
-#ifndef __DJIKSTRAS_HPP__
-#define __DJIKSTRAS_HPP__
+#include "Dijkstras.hpp"
 
-#include "libs.hpp"
-
-using namespace std;
-
+// Global variables
 int INF = numeric_limits<int>::max();
 
 typedef pair<int, int> apurr;
 
-// Using adjacency list
-class Graph
+// CONSTRUCTOR
+Graph::Graph(int V) // arg: number of vertices
 {
-    int V;
-
-    list<pair<int, int>> *N; // store vertex and weight for every pair
-
-public:
-    Graph(int V);
-
-    void addEdge(int u, int v, int w);
-
-    void shortestPath(int s, int dest);
-};
-
-Graph::Graph(int V)
-{
-    this->V = V;
+    this->VERTEX_COUNT = V;
     N = new list<apurr>[V];
 }
 
-void Graph::addEdge(int u, int v, int w)
+
+// Stores Neighbors in a List of ordered pair = (v,w). where
+    // pair[0] = v: (v) is a neighbor of N[u]
+    // pair[1] = w: (w) is the weight of the edge (u,v)
+
+void Graph::addEdge(int u, int v, int w) // args: edge (u,v) , with a wieght (w)
 {
-    N[u].push_back(make_pair(v, w));
-    N[v].push_back(make_pair(u, w));
+    N[u].push_back(make_pair(v, w)); // Neighbors of (u) = (v,w) 
+    N[v].push_back(make_pair(u, w)); // Neighbors of (v) = (u,w)
 }
 
 void Graph::shortestPath(int src, int dest)
@@ -42,7 +29,7 @@ void Graph::shortestPath(int src, int dest)
     priority_queue<apurr, vector<apurr>, greater<apurr>>
         pq;
 
-    vector<int> T(V, INF);
+    vector<int> T(VERTEX_COUNT, INF);
 
     pq.push(make_pair(0, src));
     T[src] = 0;
@@ -52,7 +39,7 @@ void Graph::shortestPath(int src, int dest)
         int u = pq.top().second;
         pq.pop();
 
-        list<pair<int, int>>::iterator i;
+        list<pair<int, int>>::iterator i; 
         for (i = N[u].begin(); i != N[u].end(); ++i)
         {
             int v = (*i).first;
@@ -68,5 +55,3 @@ void Graph::shortestPath(int src, int dest)
 
     cout << T[dest] << endl;
 }
-
-#endif
