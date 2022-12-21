@@ -8,7 +8,8 @@ class Graph:
 
     # Search function
 
-    def find(self, parent, i):
+    # parent is not an attribute of the object itself.
+    def find(self, parent,i):
         if parent[i] == i:
             return i
         return self.find(parent, parent[i])
@@ -31,8 +32,10 @@ class Graph:
         result = []
         i, e = 0, 0
         self.graph = sorted(self.graph, key=lambda item: item[2])
-        parent = []
-        rank = []
+        parent = [] # local 
+        rank = []   # local
+        
+        # 0 - nth vertex are placed in the parent list, with their rank being assigned to 0 in the rank list
         for node in range(self.V):
             parent.append(node)
             rank.append(0)
