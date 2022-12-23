@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "\"*.extension\"": ".hpp",
-        "tuple": "cpp",
-        "utility": "cpp"
-    }
-}
